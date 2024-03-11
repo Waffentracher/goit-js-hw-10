@@ -1,5 +1,5 @@
 body {
-    
+
     font-family: Arial, sans-serif;
 }
 
@@ -10,7 +10,7 @@ input[type="text"] {
     width: 190px;
     margin-left: 10px;
     margin-top: 10px;
-};
+}
 
 button {
     padding: 8px 16px;
@@ -21,10 +21,10 @@ button {
 
 .timer {
     display: flex;
-    justify-content:left;
+    justify-content: left;
     margin-top: 20px;
     padding: 0;
-    
+
 }
 
 .field {
@@ -35,7 +35,7 @@ button {
 .value {
     font-size: 40px;
     display: flex;
-    justify-content:center;
+    justify-content: center;
 
 }
 
