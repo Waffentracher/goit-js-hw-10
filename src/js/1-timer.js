@@ -10,7 +10,8 @@ const hoursElement = document.querySelector('[data-hours]');
 const minutesElement = document.querySelector('[data-minutes]');
 const secondsElement = document.querySelector('[data-seconds]');
 
-let countdownInterval;
+let userSelectedDate = null;
+let countdownInterval = null;
 
 startButton.disabled = true;
 
@@ -37,8 +38,7 @@ const updateTimer = ms => {
 };
 
 const startTimer = () => {
-  const targetDate = new Date(dateTimePicker.value).getTime();
-  if (isNaN(targetDate)) {
+  if (!userSelectedDate) {
     iziToast.error({
       title: 'Error',
       message: 'Please choose a valid date and time.',
@@ -46,13 +46,15 @@ const startTimer = () => {
     return;
   }
 
+  const targetDate = userSelectedDate.getTime();
   startButton.disabled = true;
+  dateTimePicker.disabled = true;
 
   countdownInterval = setInterval(() => {
     const now = new Date().getTime();
     const distance = targetDate - now;
 
-    if (distance < 0) {
+    if (distance <= 0) {
       clearInterval(countdownInterval);
       updateTimer(0);
       iziToast.success({
@@ -60,17 +62,18 @@ const startTimer = () => {
         message: 'The countdown has reached its end.',
       });
       startButton.disabled = false;
+      dateTimePicker.disabled = false;
     } else {
       updateTimer(distance);
     }
   }, 1000);
 };
 
-const handleDateTimeChange = () => {
-  const selectedDate = new Date(dateTimePicker.value).getTime();
+const handleDateTimeChange = selectedDates => {
+  const selectedDate = selectedDates[0];
   const currentDate = new Date().getTime();
 
-  if (selectedDate <= currentDate) {
+  if (selectedDate.getTime() <= currentDate) {
     startButton.disabled = true;
     iziToast.error({
       title: 'Error',
@@ -78,15 +81,16 @@ const handleDateTimeChange = () => {
     });
   } else {
     startButton.disabled = false;
+    userSelectedDate = selectedDate;
   }
 };
 
-dateTimePicker.addEventListener('input', handleDateTimeChange);
-startButton.addEventListener('click', startTimer);
-
-// Оновлений код для виклику календаря для вибору дати
 flatpickr(dateTimePicker, {
   enableTime: true,
-  dateFormat: 'Y-m-d H:i',
-  minDate: 'now',
+  time_24hr: true,
+  defaultDate: new Date(),
+  minuteIncrement: 1,
+  onClose: handleDateTimeChange,
 });
+
+startButton.addEventListener('click', startTimer);
