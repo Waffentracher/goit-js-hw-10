@@ -4,17 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Promise Generator</title>
-    <link rel="stylesheet" href="./css/snackbar.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
     />
+    <style>
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 300px;
+        margin: auto;
+      }
+      fieldset {
+        display: flex;
+        gap: 10px;
+      }
+      legend {
+        font-size: 1.2em;
+        margin-bottom: 5px;
+      }
+      button {
+        padding: 10px;
+        font-size: 1em;
+      }
+    </style>
   </head>
   <body>
-    <section>
-      <a class="btn" href="./index.html">Go to home</a>
-      <ul class="form"></ul>
-    </section>
     <form class="form">
       <label>
         Delay (ms)

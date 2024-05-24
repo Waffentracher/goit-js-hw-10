@@ -4,7 +4,6 @@ document.querySelector('.form').addEventListener('submit', function (event) {
   const delay = Number(this.delay.value);
   const state = this.state.value;
 
-  // Видалення попередніх повідомлень перед створенням нових
   iziToast.destroy();
 
   createPromise(delay, state)
@@ -21,7 +20,6 @@ document.querySelector('.form').addEventListener('submit', function (event) {
       });
     })
     .finally(() => {
-      // Очищення полів форми
       this.reset();
     });
 });
