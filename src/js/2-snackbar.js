@@ -1,35 +1,39 @@
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
-
-const form = document.querySelector('.form');
-
-form.addEventListener('submit', function (event) {
+document.querySelector('.form').addEventListener('submit', function (event) {
   event.preventDefault();
 
-  const formData = new FormData(this);
-  const delay = formData.get('delay');
-  const state = formData.get('state');
+  const delay = Number(this.delay.value);
+  const state = this.state.value;
 
-  const promise = new Promise((resolve, reject) => {
+  // Видалення попередніх повідомлень перед створенням нових
+  iziToast.destroy();
+
+  createPromise(delay, state)
+    .then(result => {
+      iziToast.success({
+        title: 'Success',
+        message: `✅ Fulfilled promise in ${result}ms`,
+      });
+    })
+    .catch(error => {
+      iziToast.error({
+        title: 'Error',
+        message: `❌ Rejected promise in ${error}ms`,
+      });
+    })
+    .finally(() => {
+      // Очищення полів форми
+      this.reset();
+    });
+});
+
+function createPromise(delay, state) {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (state === 'fulfilled') {
         resolve(delay);
-      } else if (state === 'rejected') {
+      } else {
         reject(delay);
       }
     }, delay);
   });
-
-  promise.then(
-    delay =>
-      iziToast.success({
-        title: 'Success',
-        message: `✅ Fulfilled promise in ${delay}ms`,
-      }),
-    delay =>
-      iziToast.error({
-        title: 'Error',
-        message: `❌ Rejected promise in ${delay}ms`,
-      })
-  );
-});
+}
