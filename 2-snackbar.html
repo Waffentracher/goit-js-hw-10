@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promises Form</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise Generator</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet">
-  <script type="module" crossorigin src="/goit-js-hw-10/commonHelpers2.js"></script>
-  <link rel="modulepreload" crossorigin href="/goit-js-hw-10/assets/modulepreload-polyfill-3cfb730f.js">
-  <link rel="modulepreload" crossorigin href="/goit-js-hw-10/assets/vendor-77e16229.js">
-  <link rel="stylesheet" href="/goit-js-hw-10/assets/vendor-7a007824.css">
-  <link rel="stylesheet" href="/goit-js-hw-10/assets/2-snackbar-9b8a0730.css">
-</head>
-
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+    />
+    <link rel="stylesheet" href="/goit-js-hw-10/assets/2-snackbar-9b8a0730.css">
+  </head>
+  <body>
+    <section>
+      <a class="btn" href="./index.html">Go to home</a>
+      <ul class="form"></ul>
+    </section>
     <form class="form">
-        <label for="delay">Delay (ms)</label>
-        <input type="number" id="delay" name="delay" required>
+      <label>
+        Delay (ms)
+        <input type="number" name="delay" required />
+      </label>
 
-        <fieldset>
-            <legend>State</legend>
-            <label><input type="radio" name="state" value="fulfilled" required> Fulfilled</label>
-            <label><input type="radio" name="state" value="rejected" required> Rejected</label>
-        </fieldset>
+      <fieldset>
+        <legend>State</legend>
+        <label>
+          <input type="radio" name="state" value="fulfilled" required />
+          Fulfilled
+        </label>
+        <label>
+          <input type="radio" name="state" value="rejected" required />
+          Rejected
+        </label>
+      </fieldset>
 
-        <button type="submit">Create notification</button>
+      <button type="submit">Create notification</button>
     </form>
-    
-</body>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="./js/2-snackbar.js"></script>
+  </body>
 </html>
