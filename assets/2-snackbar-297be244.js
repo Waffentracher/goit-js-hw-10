@@ -1,0 +1,2 @@
+import{i}from"./vendor-77e16229.js";document.addEventListener("DOMContentLoaded",()=>{const t=document.querySelector(".form");t&&t.addEventListener("submit",n=>{n.preventDefault();const o=new FormData(t),s=parseInt(o.get("delay"),10),r=o.get("state");new Promise((e,m)=>{setTimeout(()=>{r==="fulfilled"?e(s):m(s)},s)}).then(e=>{i.success({title:"✅ Успіх",message:`✅ Fulfilled promise in ${e}ms`,position:"topRight"})}).catch(e=>{i.error({title:"❌ Відмова",message:`❌ Rejected promise in ${e}ms`,position:"topRight"})})})});
+//# sourceMappingURL=2-snackbar-297be244.js.map
