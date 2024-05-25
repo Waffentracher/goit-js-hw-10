@@ -1,60 +1,42 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM fully loaded and parsed');
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
+document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('.form');
+
   if (!form) {
-    console.error('Form element not found!');
     return;
   }
 
-  form.addEventListener('submit', function (event) {
+  form.addEventListener('submit', event => {
     event.preventDefault();
 
-    const delay = Number(event.target.delay.value);
-    const state = event.target.state.value;
+    const formData = new FormData(form);
+    const delay = parseInt(formData.get('delay'), 10);
+    const state = formData.get('state');
 
-    console.log('Form submitted');
-    console.log('Delay:', delay);
-    console.log('State:', state);
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (state === 'fulfilled') {
+          resolve(delay);
+        } else {
+          reject(delay);
+        }
+      }, delay);
+    });
 
-    iziToast.destroy();
-
-    createPromise(delay, state)
-      .then(result => {
-        console.log('Promise fulfilled:', result);
+    promise
+      .then(delay => {
         iziToast.success({
-          title: 'Success',
-          message: `✅ Fulfilled promise in ${result}ms`,
+          message: `✅ Fulfilled promise in ${delay}ms`,
+          position: 'topRight',
         });
       })
-      .catch(error => {
-        console.log('Promise rejected:', error);
+      .catch(delay => {
         iziToast.error({
-          title: 'Error',
-          message: `❌ Rejected promise in ${error}ms`,
+          message: `❌ Rejected promise in ${delay}ms`,
+          position: 'topRight',
         });
-      })
-      .finally(() => {
-        event.target.reset();
-        console.log('Form reset');
       });
   });
-
-  // Додати тестове повідомлення iziToast при завантаженні сторінки
-  iziToast.success({
-    title: 'Test',
-    message: 'This is a test message!',
-  });
 });
-
-function createPromise(delay, state) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (state === 'fulfilled') {
-        resolve(delay);
-      } else {
-        reject(delay);
-      }
-    }, delay);
-  });
-}
