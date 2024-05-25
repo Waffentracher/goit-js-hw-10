@@ -9,7 +9,7 @@ export default defineConfig(({ command }) => {
       [command === 'serve' ? 'global' : '_global']: {},
     },
     root: 'src',
-    base: '/goit-js-hw-10/', // Add this line
+    base: '/goit-js-hw-10/', // Ensure this matches your repo name
     build: {
       sourcemap: true,
       rollupOptions: {
@@ -20,7 +20,7 @@ export default defineConfig(({ command }) => {
               return 'vendor';
             }
           },
-          entryFileNames: 'commonHelpers.js',
+          entryFileNames: '[name].js',
         },
       },
       outDir: '../dist',
