@@ -5,15 +5,23 @@ import FullReload from 'vite-plugin-full-reload';
 
 export default defineConfig(({ command }) => {
   return {
-    base: '/goit-js-hw-10/', // Замініть на правильний шлях вашого репозиторію
     define: {
       [command === 'serve' ? 'global' : '_global']: {},
     },
     root: 'src',
+    base: '/goit-js-hw-10/', // Add this line
     build: {
       sourcemap: true,
       rollupOptions: {
         input: glob.sync('./src/*.html'),
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          },
+          entryFileNames: 'commonHelpers.js',
+        },
       },
       outDir: '../dist',
     },
