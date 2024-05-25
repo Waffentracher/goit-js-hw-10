@@ -8,11 +8,11 @@ export default defineConfig(({ command }) => {
     define: {
       [command === 'serve' ? 'global' : '_global']: {},
     },
-    root: './src',
+    root: 'src',
     build: {
       sourcemap: true,
       rollupOptions: {
-        input: glob.sync('./src/*.html'),
+        input: glob.sync('src/*.html'),
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
@@ -24,6 +24,6 @@ export default defineConfig(({ command }) => {
       },
       outDir: '../dist',
     },
-    plugins: [injectHTML(), FullReload(['./src/**/*.html'])],
+    plugins: [injectHTML(), FullReload(['src/**/*.html'])],
   };
 });
