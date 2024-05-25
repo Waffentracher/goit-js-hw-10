@@ -1,27 +1,44 @@
-document.querySelector('.form').addEventListener('submit', function (event) {
-  event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM fully loaded and parsed');
 
-  const delay = Number(this.delay.value);
-  const state = this.state.value;
+  document.querySelector('.form').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-  iziToast.destroy();
+    const delay = Number(event.target.delay.value);
+    const state = event.target.state.value;
 
-  createPromise(delay, state)
-    .then(result => {
-      iziToast.success({
-        title: 'Success',
-        message: `✅ Fulfilled promise in ${result}ms`,
+    console.log('Form submitted');
+    console.log('Delay:', delay);
+    console.log('State:', state);
+
+    iziToast.destroy();
+
+    createPromise(delay, state)
+      .then(result => {
+        console.log('Promise fulfilled:', result);
+        iziToast.success({
+          title: 'Success',
+          message: `✅ Fulfilled promise in ${result}ms`,
+        });
+      })
+      .catch(error => {
+        console.log('Promise rejected:', error);
+        iziToast.error({
+          title: 'Error',
+          message: `❌ Rejected promise in ${error}ms`,
+        });
+      })
+      .finally(() => {
+        event.target.reset();
+        console.log('Form reset');
       });
-    })
-    .catch(error => {
-      iziToast.error({
-        title: 'Error',
-        message: `❌ Rejected promise in ${error}ms`,
-      });
-    })
-    .finally(() => {
-      this.reset();
-    });
+  });
+
+  // Додати тестове повідомлення iziToast при завантаженні сторінки
+  iziToast.success({
+    title: 'Test',
+    message: 'This is a test message!',
+  });
 });
 
 function createPromise(delay, state) {
