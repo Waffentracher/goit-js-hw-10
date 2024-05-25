@@ -1,20 +1,20 @@
 import { defineConfig } from 'vite';
 import injectHTML from 'vite-plugin-html-inject';
 import FullReload from 'vite-plugin-full-reload';
+import glob from 'glob';
 
 export default defineConfig(({ command }) => {
   return {
+    define: {
+      [command === 'serve' ? 'global' : '_global']: {},
+    },
     root: 'src',
     build: {
       sourcemap: true,
       rollupOptions: {
-        input: {
-          main: './src/index.html',
-          snackbar: './src/2-snackbar.html',
-          timer: './src/1-timer.html',
-        },
+        input: glob.sync('./src/*.html'),
         output: {
-          entryFileNames: 'js/[name].js',
+          entryFileNames: 'assets/[name].js',
           manualChunks(id) {
             if (id.includes('node_modules')) {
               return 'vendor';

@@ -1,7 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM fully loaded and parsed');
 
-  document.querySelector('.form').addEventListener('submit', function (event) {
+  const form = document.querySelector('.form');
+  if (!form) {
+    console.error('Form element not found!');
+    return;
+  }
+
+  form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const delay = Number(event.target.delay.value);
